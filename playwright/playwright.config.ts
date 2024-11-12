@@ -16,16 +16,15 @@ const config: import('@playwright/test').PlaywrightTestConfig = {
     testDir: './tests',
     snapshotDir: 'expected_snapshots_650-980px',
     retries: 0,  // Retries failed tests twice
-    //reporter: process.env.CI ? 'blob' : [['html', { open: 'never' }]],
 
     /* Maximum time one test can run for. */
-    timeout: 300 * 1000,
+    timeout: 10 * 1000,
     expect: {
         /**
          * Maximum time expect() should wait for the condition to be met.
          * For example in `await expect(locator).toHaveText();`
          */
-        timeout: 30000,
+        timeout: 20000,
         toHaveScreenshot: {
             animations: "disabled",
             maxDiffPixelRatio: 0.001,
@@ -33,12 +32,7 @@ const config: import('@playwright/test').PlaywrightTestConfig = {
             threshold:0.01
         }
     },
-    /* Fail the build on CI if you accidentally left test.only in the source code. */
-    forbidOnly: !!process.env.CI,
-    /* Retry on CI only */
-    // retries: process.env.CI ? 2 : 0,
-    /* Opt out of parallel tests on CI. */
-    // workers: process.env.CI ? 1 : undefined,
+
     workers: 1,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     //  reporter: 'html', line, list, dot
@@ -48,7 +42,7 @@ const config: import('@playwright/test').PlaywrightTestConfig = {
     use: {
 
         /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-        actionTimeout: 30000,
+        actionTimeout: 20000,
         /* Base URL to use in actions like `await page.goto('/')`. */
         baseURL: process.env.URL,
 
@@ -63,12 +57,12 @@ const config: import('@playwright/test').PlaywrightTestConfig = {
             use: {
                 ...devices['Desktop Chrome'],
                 viewport: { width: 1720, height: 980 },
-                headless: false, // process.env.CI ? true : false, //для запуску в докері на CI "true", (змінна також впливає на діфи в скрінах, наприклад зявляється скрол)
-                screenshot: 'only-on-failure', //on
+                headless: false,
+                screenshot: 'only-on-failure',
                 timezoneId: 'Europe/Kiev',
                 launchOptions: {
-                    args: ['--disable-dev-shm-usage'], //https://peter.sh/experiments/chromium-command-line-switches/
-                    devtools: false // process.env.CI ? true : false,
+                    args: ['--disable-dev-shm-usage'],
+                    devtools: false
                 },
             },
         },

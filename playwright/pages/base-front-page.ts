@@ -6,13 +6,12 @@ export class BaseFrontPage {
 
     globalFrontRoute = globalFrontRouteMapping;
 
-    $safeMarkup = "//*[@data-testid='safe-markup']";
+    $menuDashboard = "#dashboard-item";
 
 
     constructor(page: Page) {
         this.page = page;
-        this.safeMarkup = page.locator(this.$safeMarkup);
-
+        this.menuDashboard = page.locator(this.$menuDashboard);
 
     }
 
